@@ -1,0 +1,35 @@
+.transaction-history {
+    width: 80%;
+    margin: 20px auto;
+    border-collapse: collapse;
+    font-family: Arial, sans-serif;
+}
+
+.transaction-history-color {
+    background-color: #777;
+}
+
+.transaction-history-cell {
+    padding: 12px 15px;
+    color: white;
+    font-weight: bold;
+}
+
+.transaction-history-row:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.transaction-history-row:hover {
+    background-color: #ddd;
+}
+
+.transaction-history-data {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    text-align: center;
+}
+
+.transaction-history-data:first-child {
+    font-weight: bold;
+    text-align: left;
+}
