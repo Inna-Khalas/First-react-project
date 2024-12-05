@@ -1,29 +1,30 @@
+import './Profile.css';
 
 export default function Profile({ username, tag, location, avatar, stats: { followers, views, likes } }) {
     return (
-        <div>
-            <div>
-                <img
+        <div className='profile-account'>
+            <div className='profile-container'>
+                <img className='profile-avatar'
                     src={avatar}
                     alt="User avatar"
                 />
-                <p>{username}</p>
-                <p>{tag}</p>
-                <p>{location}</p>
+                <p className='profile-username'>{username}</p>
+                <p className='profile-tag'>@{tag}</p>
+                <p className='profile-location'>{location}</p>
             </div>
 
-            <ul>
-                <li>
-                    <span>Followers</span>
-                    <span>{followers}</span>
+            <ul className='profile-list'>
+                <li className='profile-item'>
+                    <span className='profile-text'>Followers</span>
+                    <span className='profile-textb'>{followers}</span>
                 </li>
-                <li>
-                    <span>Views</span>
-                    <span>{views}</span>
+                <li className='profile-item'>
+                    <span className='profile-text'>Views</span>
+                    <span className='profile-textb'>{views}</span>
                 </li>
-                <li>
-                    <span>Likes</span>
-                    <span>{likes}</span>
+                <li className='profile-item'>
+                    <span className='profile-text'>Likes</span>
+                    <span className='profile-textb'>{likes}</span>
                 </li>
             </ul>
         </div>
