@@ -1,0 +1,35 @@
+.optionBtn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 100px;
+    padding: 14px 40px;
+    width: 100px;
+    height: 45px;
+    font-weight: 600;
+    font-size: 14px;
+    color: #333;
+    border: 1px solid #fd9222;
+    background-color: transparent;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+
+    &:hover {
+        background-color: #fd9222;
+        color: #fff;
+        box-shadow: 0 8px 15px rgba(253, 146, 34, 0.4),
+            0 4px 6px rgba(253, 146, 34, 0.3),
+            0 2px 4px rgba(0, 0, 0, 0.2);
+        transform: translateY(-2px);
+        ;
+    }
+}
+
+.optionContainer {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    gap: 14px;
+    margin-top: 30px;
+    outline: none;
+}
