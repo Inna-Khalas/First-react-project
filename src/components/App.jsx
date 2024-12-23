@@ -1,57 +1,56 @@
 import { useState, useEffect } from "react";
-import Description from "./Description/Description";
-import OptionBtn from "./Options/Options";
-import UpdateFeedback from "./Feedback/Feedback";
-import NoFeedback from "./Feedback/Notification";
+import { nanoid } from "nanoid";
+import contactDate from "../assets/contact.json";
+import ContactForm from "./ContactForm/ContactForm";
+import ContactList from "./ContactList/ContactList";
+import SearchBox from "./SearchBox/SearchBox";
+
+const SAVED_CONTACTS = "contacts";
 
 export default function App() {
-
-  const KEY = 'feedback';
-  const defaultFeedback = {
-    good: 0,
-    neutral: 0,
-    bad: 0,
-  }
-  const [feedbackType, setFeedBack] = useState(() => {
-    const savedFeedback = JSON.parse(localStorage.getItem(KEY));
-    return savedFeedback ?? defaultFeedback;
-  })
-
+  const [contacts, setContacts] = useState(() => {
+    const savedContacts = localStorage.getItem(SAVED_CONTACTS);
+    return savedContacts ? JSON.parse(savedContacts) : contactDate;
+  });
+  const [filter, setFilter] = useState("");
 
   useEffect(() => {
-    localStorage.setItem(KEY, JSON.stringify(feedbackType))
-  }, [feedbackType])
+    localStorage.setItem(SAVED_CONTACTS, JSON.stringify(contacts));
+  }, [contacts]);
 
-  const { good, neutral, bad } = feedbackType;
-  const totalFeedback = good + neutral + bad;
-  const positiveFeedback =
-    totalFeedback > 0 ? Math.round((good / totalFeedback) * 100) : 0;
+  const addContact = (newContact) => {
+    const duplicate = contacts.find(
+      (contact) => contact.name.toLowerCase() === newContact.name.toLowerCase()
+    );
 
-  const resetFeedBack = () => {
-    setFeedBack(defaultFeedback);
+    if (duplicate) {
+      alert(`${newContact.name} вже є в контактах`);
+      return;
+    }
+
+    const contactWithId = { ...newContact, id: nanoid() };
+    setContacts((prev) => [contactWithId, ...prev]);
   };
 
+  const deleteContacts = (id) => {
+    setContacts((prev) => prev.filter((contact) => contact.id !== id));
+  };
+
+  const handleFilterChange = (value) => {
+    setFilter(value);
+  };
+
+  const filterContacts = () =>
+    contacts.filter((contact) =>
+      contact.name.toLowerCase().includes(filter.toLowerCase())
+    );
+
   return (
-    <div>
-      <Description />
-      <OptionBtn
-        onClick={(type) =>
-          setFeedBack((prev) => ({ ...prev, [type]: prev[type] + 1 }))
-        }
-        onReset={resetFeedBack}
-        totalFeedback={totalFeedback}
-      />
-      {totalFeedback > 0 ? (
-        <UpdateFeedback
-          feedBack={feedbackType}
-          positiveFeedback={positiveFeedback}
-          totalFeedback={totalFeedback}
-
-        />
-      ) : (
-        <NoFeedback />
-      )}
-    </div>
+    <>
+      <h1>Register form:</h1>
+      <ContactForm onRegister={addContact} />
+      <SearchBox value={filter} onChange={handleFilterChange} />
+      <ContactList contacts={filterContacts()} onDelete={deleteContacts} />
+    </>
   );
-
 }
