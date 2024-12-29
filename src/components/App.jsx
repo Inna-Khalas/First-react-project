@@ -3,11 +3,11 @@ import toast from "react-hot-toast";
 import axios from "axios";
 import { Toaster } from "react-hot-toast";
 import SearchBar from "./SearchBar/SearchBar";
-import { ErrorMessage } from "formik";
 import ImageGallery from "./ImageGallery/ImageGallery";
 import Loader from "./Loader/Loader";
 import LoadMoreBtn from "./LoadMoreBtn/LoadMoreBtn";
 import ImageModal from "./ImageModal/ImageModal";
+import ErrorMessage from "./ErrorMessage/ErrorMessage";
 
 const KEY = "Mendu8P0loV10VDPyIOlvXXGbvDhii94Y8i8fiYjh1s";
 
@@ -46,8 +46,8 @@ export default function App() {
 
       setImages((prev) => [...prev, ...data.results]);
       setHasMore(data.results.length > 0);
-    } catch (err) {
-      setError(err.message);
+    } catch {
+      setError("Щось пішло не так, перезавантажте сторінку!");
     } finally {
       setLoading(false);
     }
