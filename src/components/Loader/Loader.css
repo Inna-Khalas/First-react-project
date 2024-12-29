@@ -1,13 +1,13 @@
-/* Loader.css */
-
 .loader-container {
-  position: fixed; /* Фиксированное позиционирование на экране */
+  position: fixed;
   top: 0;
   left: 0;
-  width: 100vw; /* Занимает всю ширину экрана */
-  height: 100vh; /* Занимает всю высоту экрана */
-  display: flex; /* Используем Flexbox для центрирования */
-  justify-content: center; /* Центрируем по горизонтали */
-  align-items: center; /* Центрируем по вертикали */
-  z-index: 9999; /* Размещаем поверх других элементов */
+  bottom: 0;
+  right: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
 }
