@@ -1,98 +1,44 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 import axios from "axios";
 import { Toaster } from "react-hot-toast";
-import SearchBar from "./SearchBar/SearchBar";
-import ImageGallery from "./ImageGallery/ImageGallery";
-import Loader from "./Loader/Loader";
-import LoadMoreBtn from "./LoadMoreBtn/LoadMoreBtn";
-import ImageModal from "./ImageModal/ImageModal";
-import ErrorMessage from "./ErrorMessage/ErrorMessage";
+import { Route, Routes } from "react-router-dom";
+import HomePage from "../pages/HomePage";
+import MoviesPage from "../pages/MoviesPage";
+import MoviesDetailsPage from "../pages/MoviesDetailsPage";
+import NotFoundPage from "../pages/NotFoundPage";
+import MovieCast from "./MovieCast/MovieCast";
+import MovieReviews from "./MovieReviews/MovieReviews";
 
-const KEY = "Mendu8P0loV10VDPyIOlvXXGbvDhii94Y8i8fiYjh1s";
+const API_KEY = "2a796ea6dc9f2c8546198bb6a5e93a48";
+
+const url =
+  "https://api.themoviedb.org/3/search/movie?include_adult=false&language=en-US&page=1";
+
+const options = {
+  headers: {
+    Authorization:
+      "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyYTc5NmVhNmRjOWYyYzg1NDYxOThiYjZhNWU5M2E0OCIsIm5iZiI6MTczNTg0MDEzMC41MzcsInN1YiI6IjY3NzZkMTgyMzYxNWMxYTM3NjEyYWE3MiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.eiwzrLlrzdTIpH7lYL1JH2rhNlEnzs9w_aIzr1bu148",
+  },
+};
+
+axios
+  .get(url, options)
+  .then((response) => console.log(response))
+  .catch((err) => console.error(err));
 
 export default function App() {
-  const [query, setQuery] = useState("");
-  const [images, setImages] = useState([]);
-  const [page, setPage] = useState(1);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [modalImage, setModalImage] = useState(null);
-  const [hasMore, setHasMore] = useState(true);
-  const [noResults, setNoResults] = useState(false);
-
-  const fetchImages = useCallback(async () => {
-    if (!query) return;
-    setLoading(true);
-    setError(null);
-    setNoResults(false);
-
-    try {
-      const { data } = await axios.get(
-        "https://api.unsplash.com/search/photos",
-        {
-          params: {
-            query,
-            page,
-            per_page: 15,
-            client_id: KEY,
-          },
-        }
-      );
-
-      if (data.results.length === 0) {
-        setNoResults(true);
-      }
-
-      setImages((prev) => [...prev, ...data.results]);
-      setHasMore(data.results.length > 0);
-    } catch {
-      setError("Щось пішло не так, перезавантажте сторінку!");
-    } finally {
-      setLoading(false);
-    }
-  }, [query, page]);
-
-  useEffect(() => {
-    fetchImages();
-  }, [fetchImages]);
-
-  const handleSearch = useCallback((searchQuery) => {
-    if (!searchQuery.trim()) {
-      toast.error("Заповніть поле пошуку!");
-      return;
-    }
-    setQuery(searchQuery);
-    setImages([]);
-    setPage(1);
-    setHasMore(true);
-    setNoResults(false);
-  }, []);
-
-  const handleLoadMore = () => {
-    setPage((prev) => prev + 1);
-  };
-
-  const openModal = (image) => {
-    setModalImage(image);
-  };
-
-  const closeModal = () => {
-    setModalImage(null);
-  };
-
   return (
-    <div>
-      <Toaster position="top-right" />
-      <SearchBar onSubmit={handleSearch} />
-      {error && <ErrorMessage message={error} />}
-      <ImageGallery images={images} onImageClick={openModal} />
-      {loading && <Loader />}
-      {noResults && !loading && <p>За вашим запитом нічого не знайдено.</p>}
-      {hasMore && !loading && images.length > 0 && (
-        <LoadMoreBtn onClick={handleLoadMore} />
-      )}
-      {modalImage && <ImageModal image={modalImage} onClose={closeModal} />}
-    </div>
+    <>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/movies-page" element={<MoviesPage />} />
+        <Route path="/movies-details-page" element={<MoviesDetailsPage />}>
+          <Route path="movie-cast" element={<MovieCast />} />
+          <Route path="movie-reviews" element={<MovieReviews />} />
+        </Route>
+        <Route path="*" element={<NotFoundPage />} />
+      </Routes>
+    </>
   );
 }
