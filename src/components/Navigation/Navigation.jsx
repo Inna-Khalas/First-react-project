@@ -2,14 +2,13 @@ import { NavLink, Outlet } from "react-router-dom";
 
 function Navigation() {
   return (
-    <div>
+    <header>
       <nav>
-        <NavLink to="/"></NavLink>
-        <NavLink to="/movies-page"></NavLink>
+        <NavLink to="/">Home</NavLink>
+        <NavLink to="/movies">Movies</NavLink>
       </nav>
-
       <Outlet />
-    </div>
+    </header>
   );
 }
 
