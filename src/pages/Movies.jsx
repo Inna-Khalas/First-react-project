@@ -1,39 +1,51 @@
-import { useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { searchMovies } from "../services/api";
 import MovieList from "../components/MovieList/MovieList";
-import { useSearchParams } from "react-router-dom";
+import SearchBar from "../components/SearchBar/SearchBar";
+import useHttp from "../hooks/useHttp";
+import { useEffect, useState } from "react";
+import LoadMore from "../components/LoadMore/LoadMore";
 
 const Movies = () => {
-  // const [query, setQuery] = useState("");
-  const [movies, setMovies] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [page, setPage] = useState(1);
   const [searchParams, setSearchParams] = useSearchParams();
+  const query = searchParams.get("query") ?? "";
 
-  const handleSearch = async () => {
-    setLoading(true);
-    const data = await searchMovies(query);
-    if (data) {
-      setMovies(data.results);
+  const [movies, loading, isError] = useHttp(searchMovies, { query, page });
+
+  const handleChange = (newQuery) => {
+    if (!newQuery) {
+      searchParams.delete("query");
+    } else {
+      searchParams.set("query", newQuery);
     }
-    setLoading(false);
+    setSearchParams(searchParams);
+    setPage(1);
   };
 
-  const handleChange = (e) => {
-    setQuery(e.target.value);
-  };
+  useEffect(() => {});
+
+  // const loadMoreHandler = () => {
+  // setPage((prevPage) => prevPage + 1);
+  // };
+
+  if (isError) {
+    return <p>Ошибка загрузки...</p>;
+  }
 
   return (
     <div>
       <h1>Пошук фільмів</h1>
-      <input
-        type="text"
-        value={query}
-        onChange={handleChange}
-        placeholder="Введіть назву фільму"
-      />
-      <button onClick={handleSearch}>Шукати</button>
+      <SearchBar query={query} handleChange={handleChange} />
 
-      {loading ? <p>Завантаження...</p> : <MovieList movies={movies} />}
+      {loading ? (
+        <p>Завантаження...</p>
+      ) : (
+        <>
+          {movies?.results && <MovieList movies={movies.results} />}
+          <LoadMore onLoadMore={loadMoreHandler} />
+        </>
+      )}
     </div>
   );
 };

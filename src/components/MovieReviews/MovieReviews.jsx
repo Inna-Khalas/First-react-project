@@ -1,41 +1,35 @@
-import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getMovieReviews } from "../../services/api";
+import useHttp from "../../hooks/useHttp";
 
 const MovieReviews = () => {
   const { movieId } = useParams();
-  const [reviews, setReviews] = useState([]);
-  const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchReviews = async () => {
-      const data = await getMovieReviews(movieId);
-      if (data) {
-        setReviews(data.results);
-      }
-      setLoading(false);
-    };
-    fetchReviews();
-  }, [movieId]);
+  const [reviews, loading, isError] = useHttp(getMovieReviews, movieId);
 
   if (loading) {
     return <p>Завантаження...</p>;
   }
+  if (isError) {
+    return <p>Не вдалось завантажити дані про відгуки.</p>;
+  }
+
+  const reviewList = reviews?.results || [];
 
   return (
     <div>
-      <h2>Відгуки</h2>
-      {reviews.length === 0 ? (
-        <p>Немає відгуків</p>
-      ) : (
+      <h2>Відгуки:</h2>
+      {reviewList.length > 0 ? (
         <ul>
-          {reviews.map((review) => (
+          {reviewList.map((review) => (
             <li key={review.id}>
-              <p>{review.content}</p>
-              <p>- {review.author}</p>
+              <p>{review.content || "Відгук без змісту"}</p>
+              <p>- {review.author || "Невідомий автор"}</p>
             </li>
           ))}
         </ul>
+      ) : (
+        <p>Немає відгуків</p>
       )}
     </div>
   );
