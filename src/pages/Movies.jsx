@@ -2,32 +2,47 @@ import { useSearchParams } from "react-router-dom";
 import { searchMovies } from "../services/api";
 import MovieList from "../components/MovieList/MovieList";
 import SearchBar from "../components/SearchBar/SearchBar";
-import useHttp from "../hooks/useHttp";
-import { useEffect, useState } from "react";
+import { useState, useEffect, useMemo } from "react";
 import LoadMore from "../components/LoadMore/LoadMore";
+import useHttp from "../hooks/useHttp";
+import { InfinitySpin } from "react-loader-spinner";
 
 const Movies = () => {
-  const [page, setPage] = useState(1);
   const [searchParams, setSearchParams] = useSearchParams();
   const query = searchParams.get("query") ?? "";
 
-  const [movies, loading, isError] = useHttp(searchMovies, { query, page });
+  const [movies, setMovies] = useState([]);
+  const [page, setPage] = useState(1);
+
+  const params = useMemo(() => ({ query, page }), [query, page]);
+  const [moviesData, loading, isError] = useHttp(searchMovies, params);
+
+  useEffect(() => {
+    if (!query) return;
+    if (moviesData?.results) {
+      setMovies((prevMovies) =>
+        page === 1 ? moviesData.results : [...prevMovies, ...moviesData.results]
+      );
+    }
+  }, [moviesData, page, query]);
 
   const handleChange = (newQuery) => {
+    if (query === newQuery) return;
+
     if (!newQuery) {
       searchParams.delete("query");
     } else {
       searchParams.set("query", newQuery);
     }
     setSearchParams(searchParams);
+
+    setMovies([]);
     setPage(1);
   };
 
-  useEffect(() => {});
-
-  // const loadMoreHandler = () => {
-  // setPage((prevPage) => prevPage + 1);
-  // };
+  const loadMoreHandler = () => {
+    setPage((prevPage) => prevPage + 1);
+  };
 
   if (isError) {
     return <p>Ошибка загрузки...</p>;
@@ -38,13 +53,16 @@ const Movies = () => {
       <h1>Пошук фільмів</h1>
       <SearchBar query={query} handleChange={handleChange} />
 
-      {loading ? (
-        <p>Завантаження...</p>
+      {loading && page === 1 ? (
+        <InfinitySpin />
       ) : (
-        <>
-          {movies?.results && <MovieList movies={movies.results} />}
-          <LoadMore onLoadMore={loadMoreHandler} />
-        </>
+        movies.length > 0 && (
+          <>
+            <MovieList movies={movies} />
+            {loading && <InfinitySpin />}
+            <LoadMore onLoadMore={loadMoreHandler} />
+          </>
+        )
       )}
     </div>
   );
