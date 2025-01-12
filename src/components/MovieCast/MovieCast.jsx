@@ -1,14 +1,15 @@
 import { useParams } from "react-router-dom";
 import { getMovieCast } from "../../services/api";
 import useHttp from "../../hooks/useHttp";
+import { InfinitySpin } from "react-loader-spinner";
 
 function MovieCast() {
   const { movieId } = useParams();
 
-  const [cast, loading, isError] = useHttp(getMovieCast, movieId);
+  const { data: cast, loading, isError } = useHttp(getMovieCast, movieId);
 
   if (loading) {
-    return <p>Завантаження...</p>;
+    return <InfinitySpin />;
   }
 
   if (isError) {
@@ -17,7 +18,6 @@ function MovieCast() {
 
   return (
     <div>
-      <h2>Акторський склад:</h2>
       {cast?.length > 0 ? (
         <ul>
           {cast.map((actor) => (

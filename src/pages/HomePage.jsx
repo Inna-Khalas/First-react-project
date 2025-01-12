@@ -4,11 +4,12 @@ import MovieList from "../components/MovieList/MovieList";
 import useHttp from "../hooks/useHttp";
 import { getMoviesData } from "../services/api";
 import { useState, useEffect } from "react";
+import s from "./HomePage.module.css";
 
 export default function HomePage() {
   const [page, setPage] = useState(1);
   const [movies, setMovies] = useState([]);
-  const [moviesData, loading, isError] = useHttp(getMoviesData, page);
+  const { data: moviesData, loading, isError } = useHttp(getMoviesData, page);
 
   useEffect(() => {
     if (moviesData?.results) {
@@ -29,8 +30,8 @@ export default function HomePage() {
   }
 
   return (
-    <div>
-      <h1>Популярні фільми</h1>
+    <div className={s.HomePage}>
+      <h1 className={s.titleHomePage}>Популярні фільми:</h1>
       {loading && page === 1 ? (
         <InfinitySpin />
       ) : (

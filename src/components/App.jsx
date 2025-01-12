@@ -1,6 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import { lazy, Suspense } from "react";
 import Navigation from "./Navigation/Navigation";
+import { InfinitySpin } from "react-loader-spinner";
 
 const HomePage = lazy(() => import("../pages/HomePage"));
 const Movies = lazy(() => import("../pages/Movies"));
@@ -13,12 +14,12 @@ export default function App() {
   return (
     <>
       <Navigation />
-      <Suspense fallback={<h1>Loading page...</h1>}>
+      <Suspense fallback={<InfinitySpin />}>
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/movies" element={<Movies />} />
           <Route path="/movies/:movieId" element={<MoviesDetailsPage />}>
-            <Route index element={<p>Select additional details</p>} />
+            <Route index element={<p>...</p>} />
             <Route path="cast" element={<MovieCast />} />
             <Route path="reviews" element={<MovieReviews />} />
           </Route>

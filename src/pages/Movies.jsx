@@ -6,6 +6,7 @@ import { useState, useEffect, useMemo } from "react";
 import LoadMore from "../components/LoadMore/LoadMore";
 import useHttp from "../hooks/useHttp";
 import { InfinitySpin } from "react-loader-spinner";
+import s from "./Movies.module.css";
 
 const Movies = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -15,7 +16,7 @@ const Movies = () => {
   const [page, setPage] = useState(1);
 
   const params = useMemo(() => ({ query, page }), [query, page]);
-  const [moviesData, loading, isError] = useHttp(searchMovies, params);
+  const { data: moviesData, loading, isError } = useHttp(searchMovies, params);
 
   useEffect(() => {
     if (!query) return;
@@ -49,10 +50,9 @@ const Movies = () => {
   }
 
   return (
-    <div>
-      <h1>Пошук фільмів</h1>
+    <div className={s.moviesWrapper}>
+      <h1 className={s.moviesTitle}>Пошук фільмів</h1>
       <SearchBar query={query} handleChange={handleChange} />
-
       {loading && page === 1 ? (
         <InfinitySpin />
       ) : (
