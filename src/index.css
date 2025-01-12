@@ -1,8 +1,8 @@
 body {
   margin: 0;
-  place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  background: linear-gradient(90deg, #1e88e5, #1e1e1e);
 }
 
 .app-title {

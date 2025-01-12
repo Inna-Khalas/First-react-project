@@ -7,8 +7,9 @@ const useHttp = (fn, params) => {
 
   useEffect(() => {
     const getData = async () => {
+      setLoading(true);
+
       try {
-        setLoading(true);
         const result = await fn(params);
         setData(result);
       } catch {
@@ -20,7 +21,7 @@ const useHttp = (fn, params) => {
     getData();
   }, [fn, params]);
 
-  return [data, loading, isError];
+  return { data, loading, isError };
 };
 
 export default useHttp;
