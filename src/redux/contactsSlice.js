@@ -6,10 +6,10 @@ export const slice = createSlice({
     items: [],
   },
   reducers: {
-    addContact(state, action) {
+    addContact: (state, action) => {
       state.items.push(action.payload);
     },
-    deleteContact(state, action) {
+    deleteContact: (state, action) => {
       state.items = state.items.filter((item) => item.id !== action.payload);
     },
   },
