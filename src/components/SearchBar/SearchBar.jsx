@@ -1,28 +1,26 @@
-import { Field, Form, Formik } from "formik";
-import s from "./SearchBar.module.css";
+import { useDispatch } from "react-redux";
+import { changeFilter } from "../../redux/filtersSlice";
+import "../../../src/index.css";
 
-const SearchBar = ({ handleChange, query }) => {
-  const onSubmit = (values) => {
-    handleChange(values.query);
+function SearchBar() {
+  const dispatch = useDispatch();
+
+  const handleChange = (e) => {
+    dispatch(changeFilter(e.target.value));
   };
 
-  const initialValues = {
-    query,
-  };
   return (
-    <div className={s.searchBar}>
-      <Formik initialValues={initialValues} onSubmit={onSubmit}>
-        <Form>
-          <Field
-            name="query"
-            className={s.input}
-            placeholder="Введіть назву фільму..."
-          />
-          <button type="submit">Шукати</button>
-        </Form>
-      </Formik>
+    <div className="search-bar">
+      <span className="search-title">Find contact by name:</span>
+
+      <input
+        className="input input-bordered input-primary w-full max-w-xs"
+        type="text"
+        placeholder="Заповніть поле пошуку"
+        onChange={handleChange}
+      />
     </div>
   );
-};
+}
 
 export default SearchBar;
