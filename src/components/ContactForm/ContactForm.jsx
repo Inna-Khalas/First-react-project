@@ -36,16 +36,16 @@ const ContactForm = () => {
       return;
     }
 
-    dispatch(
-      addContact({
-        id: crypto.randomUUID(),
-        name: values.name,
-        number: values.number,
-      })
-    );
+    const newContact = {
+      id: crypto.randomUUID(),
+      name: values.name,
+      number: values.number,
+    };
+
+    dispatch(addContact(newContact));
 
     toast.success("Контакт додано успішно!", {
-      position: "bottom-center",
+      position: "top-center",
     });
 
     resetForm();
