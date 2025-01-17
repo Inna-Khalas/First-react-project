@@ -2,7 +2,16 @@ import { configureStore } from "@reduxjs/toolkit";
 import contactReducer from "./contactsSlice";
 import filterReducer from "./filtersSlice";
 import storage from "redux-persist/lib/storage";
-import { persistReducer, persistStore } from "redux-persist";
+import {
+  persistStore,
+  persistReducer,
+  FLUSH,
+  REHYDRATE,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,
+} from "redux-persist";
 
 const persistConfig = {
   key: "contacts",
@@ -17,6 +26,12 @@ export const store = configureStore({
     contacts: persistedContactsReducer,
     filters: filterReducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
+    }),
 });
 
 export const persistor = persistStore(store);
