@@ -1,24 +1,29 @@
 import { useSelector } from "react-redux";
 import Contact from "../Contact/Contact";
 import SearchBar from "../SearchBar/SearchBar";
-import { selectContacts, selectNameFilter } from "../../redux/selectors";
+import {
+  selectError,
+  selectFilteredContacts,
+  selectIsLoading,
+} from "../../redux/selectors";
+import { BallTriangle } from "react-loader-spinner";
 
 const ContactList = () => {
-  const contacts = useSelector(selectContacts);
-  const filter = useSelector(selectNameFilter);
+  const contacts = useSelector(selectFilteredContacts);
+  const isLoading = useSelector(selectIsLoading);
+  const error = useSelector(selectError);
 
-  const filteredContacts = contacts.filter((contact) =>
-    contact.name.toLowerCase().includes(filter.toLowerCase())
-  );
+  if (isLoading) return <BallTriangle color="blue" width={50} height={50} />;
+  if (error) return <p>Error: {error}</p>;
 
   return (
     <div className="contact-list">
       <SearchBar />
-      {filteredContacts.length === 0 ? (
-        <p>Нічого не знайдено</p>
+      {contacts.length === 0 ? (
+        <p>No contacts found</p>
       ) : (
         <ul className="contacts-list">
-          {filteredContacts.map((contact) => (
+          {contacts.map((contact) => (
             <Contact key={contact.id} {...contact} />
           ))}
         </ul>

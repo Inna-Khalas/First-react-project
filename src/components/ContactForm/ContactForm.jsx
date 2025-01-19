@@ -1,9 +1,10 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
-import { addContact } from "../../redux/contactsSlice";
 import toast, { Toaster } from "react-hot-toast";
 import "../../../src/index.css";
+import { selectContacts } from "../../redux/selectors";
+import { addContact } from "../../redux/contactsOps";
 
 const validationSchema = Yup.object({
   name: Yup.string()
@@ -21,7 +22,7 @@ const initialValues = {
 };
 
 const ContactForm = () => {
-  const contacts = useSelector((state) => state.contacts.items) || [];
+  const contacts = useSelector(selectContacts);
   const dispatch = useDispatch();
 
   const handleSubmit = (values, { resetForm }) => {

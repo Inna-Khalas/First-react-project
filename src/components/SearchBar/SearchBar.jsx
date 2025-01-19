@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
-import { changeFilter } from "../../redux/filtersSlice";
 import "../../../src/index.css";
+import { changeFilter } from "../../redux/filtersSlice";
 
 function SearchBar() {
   const dispatch = useDispatch();
