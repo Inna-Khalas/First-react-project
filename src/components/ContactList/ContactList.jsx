@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import Contact from "../Contact/Contact";
-import SearchBar from "../SearchBar/SearchBar";
+// import SearchBar from "../SearchBar/SearchBar";
 import {
   selectError,
   selectFilteredContacts,
@@ -18,7 +18,7 @@ const ContactList = () => {
 
   return (
     <div className="contact-list">
-      <SearchBar />
+      {/* <SearchBar /> */}
       {contacts.length === 0 ? (
         <p>No contacts found</p>
       ) : (

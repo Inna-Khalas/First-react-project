@@ -3,6 +3,7 @@ import { fetchContacts } from "../redux/contactsOps";
 import ContactList from "./ContactList/ContactList";
 import { useEffect } from "react";
 import ContactForm from "./ContactForm/ContactForm";
+import SearchBar from "./SearchBar/SearchBar";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -12,9 +13,10 @@ const App = () => {
   }, [dispatch]);
 
   return (
-    <div className="app">
-      <h1>Contacts</h1>
+    <div className="wrapper">
+      <h1 className="title">Contacts</h1>
       <ContactForm />
+      <SearchBar />
       <ContactList />
     </div>
   );
