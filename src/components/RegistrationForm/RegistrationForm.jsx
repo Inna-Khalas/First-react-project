@@ -1,7 +1,9 @@
-import { Field, Form, Formik } from "formik";
-import { useDispatch } from "react-redux";
+import { ErrorMessage, Field, Form, Formik } from "formik";
+import { useDispatch, useSelector } from "react-redux";
 import { register } from "../../redux/auth/operations";
 import * as Yup from "yup";
+import { selectUser } from "../../redux/auth/selectors";
+import toast from "react-hot-toast";
 
 const validationSchema = Yup.object({
   name: Yup.string().required("Name is required"),
@@ -13,11 +15,23 @@ const validationSchema = Yup.object({
 
 function RegistrationForm() {
   const dispatch = useDispatch();
+  const users = useSelector(selectUser);
 
   const initialValues = { name: "", email: "", password: "" };
 
-  const handleSubmit = (values) => {
-    dispatch(register(values));
+  const handleSubmit = (values, { resetForm }) => {
+    if (users && users.email === values.email) {
+      return toast.error("A user with this email is already registered", {
+        position: "bottom-center",
+      });
+    }
+
+    dispatch(register(values)).then(() => {
+      toast.success("Registration successful!", {
+        position: "bottom-center",
+      });
+      resetForm();
+    });
   };
 
   return (
@@ -32,10 +46,18 @@ function RegistrationForm() {
             Name:
             <Field name="name" placeholder="Enter your name" />
           </label>
+          <ErrorMessage name="name" component="div" className="error-message" />
+
           <label>
             Email:
             <Field type="email" name="email" placeholder="Enter your email" />
           </label>
+          <ErrorMessage
+            name="email"
+            component="div"
+            className="error-message"
+          />
+
           <label>
             Password:
             <Field
@@ -44,6 +66,12 @@ function RegistrationForm() {
               placeholder="Enter your password"
             />
           </label>
+          <ErrorMessage
+            name="password"
+            component="div"
+            className="error-message"
+          />
+
           <button type="submit">Register</button>
         </Form>
       )}

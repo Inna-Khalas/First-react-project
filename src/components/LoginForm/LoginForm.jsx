@@ -1,4 +1,4 @@
-import { Field, Form, Formik } from "formik";
+import { ErrorMessage, Field, Form, Formik } from "formik";
 import { useDispatch } from "react-redux";
 import { logIn } from "../../redux/auth/operations";
 
@@ -19,6 +19,7 @@ function LoginForm() {
               Email:
               <Field type="email" name="email" placeholder="Enter your email" />
             </label>
+            <ErrorMessage name="email" component="div" />
             <label>
               Password:
               <Field
@@ -27,7 +28,8 @@ function LoginForm() {
                 placeholder="Enter your password"
               />
             </label>
-            <button type="submit"></button>
+            <ErrorMessage name="password" component="div" />
+            <button type="submit">LogIn</button>
           </Form>
         )}
       </Formik>

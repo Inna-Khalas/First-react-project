@@ -7,6 +7,7 @@ import RestrichedRoute from "../RestrichedRoute";
 import { refreshUser } from "../redux/auth/operations";
 import { selectRefresh } from "../redux/auth/selectors";
 import { BallTriangle } from "react-loader-spinner";
+import NotFound from "../pages/NotFound";
 
 const HomePage = lazy(() => import("../pages/HomePage/HomePage"));
 const RegistrationPage = lazy(() =>
@@ -28,7 +29,7 @@ const App = () => {
   ) : (
     <Loyout>
       <Routes>
-        <Route path="/" element={<HomePage />} />
+        <Route index element={<HomePage />} />
         <Route
           path="/register"
           element={
@@ -50,6 +51,7 @@ const App = () => {
             <PrivateRoute redirectTo="/login" component={<ContactsPage />} />
           }
         />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </Loyout>
   );
