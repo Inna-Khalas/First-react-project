@@ -8,6 +8,7 @@ const Contact = ({ name, number, id }) => {
   const handleDelete = () => {
     dispatch(deleteContact(id));
   };
+
   return (
     <li className="item">
       <input type="checkbox" />

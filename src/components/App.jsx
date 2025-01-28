@@ -1,8 +1,12 @@
-import { useDispatch } from "react-redux";
-import { fetchContacts } from "../redux/contacts/contactsOps";
+import { useDispatch, useSelector } from "react-redux";
 import { lazy, useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import PrivateRoute from "../PrivateRoute";
+import Loyout from "../Layout";
+import RestrichedRoute from "../RestrichedRoute";
+import { refreshUser } from "../redux/auth/operations";
+import { selectRefresh } from "../redux/auth/selectors";
+import { BallTriangle } from "react-loader-spinner";
 
 const HomePage = lazy(() => import("../pages/HomePage/HomePage"));
 const RegistrationPage = lazy(() =>
@@ -13,17 +17,33 @@ const ContactsPage = lazy(() => import("../pages/ContactsPage/ContactsPage"));
 
 const App = () => {
   const dispatch = useDispatch();
+  const isRefreshing = useSelector(selectRefresh);
 
   useEffect(() => {
-    dispatch(fetchContacts());
+    dispatch(refreshUser());
   }, [dispatch]);
 
-  return (
-    <div className="wrapper">
+  return isRefreshing ? (
+    <BallTriangle />
+  ) : (
+    <Loyout>
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/register" element={<RegistrationPage />} />
-        <Route path="/login" element={<LoginPage />} />
+        <Route
+          path="/register"
+          element={
+            <RestrichedRoute
+              redirectTo="/contacts"
+              component={<RegistrationPage />}
+            />
+          }
+        />
+        <Route
+          path="/login"
+          element={
+            <RestrichedRoute redirectTo="/contacts" component={<LoginPage />} />
+          }
+        />
         <Route
           path="/contacts"
           element={
@@ -31,7 +51,7 @@ const App = () => {
           }
         />
       </Routes>
-    </div>
+    </Loyout>
   );
 };
 
