@@ -72,7 +72,6 @@ const ContactForm = () => {
                   name="name"
                   className="input input-bordered"
                 />
-
                 <ErrorMessage
                   name="name"
                   component="div"
@@ -89,7 +88,6 @@ const ContactForm = () => {
                   placeholder="+38 (XXX) XX XXX XX"
                   className="input input-bordered"
                 />
-
                 <ErrorMessage
                   name="number"
                   component="div"

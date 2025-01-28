@@ -9,6 +9,7 @@ function LoginForm() {
   const handleSubmit = (values) => {
     dispatch(logIn(values));
   };
+
   return (
     <div>
       <Formik initialValues={initialValues} onSubmit={handleSubmit}>

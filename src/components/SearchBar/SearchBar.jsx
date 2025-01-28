@@ -12,7 +12,6 @@ function SearchBar() {
   return (
     <div className="search-bar">
       <span className="search-title">Find contact by name:</span>
-
       <input
         className="input input-bordered input-primary w-full max-w-xs"
         type="text"
