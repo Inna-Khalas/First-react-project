@@ -6,7 +6,7 @@ function Navigation() {
   const isLoggedIn = useSelector(selectIsLoggedIn);
 
   return (
-    <nav>
+    <nav className="navbar-start">
       <NavLink to="/">Home</NavLink>
       {isLoggedIn && <NavLink to="/contacts">Contacts</NavLink>}
     </nav>

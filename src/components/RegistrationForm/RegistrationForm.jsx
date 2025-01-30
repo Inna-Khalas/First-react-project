@@ -1,8 +1,7 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { register } from "../../redux/auth/operations";
 import * as Yup from "yup";
-import { selectUser } from "../../redux/auth/selectors";
 import toast from "react-hot-toast";
 
 const validationSchema = Yup.object({
@@ -15,23 +14,19 @@ const validationSchema = Yup.object({
 
 function RegistrationForm() {
   const dispatch = useDispatch();
-  const users = useSelector(selectUser);
 
   const initialValues = { name: "", email: "", password: "" };
 
   const handleSubmit = (values, { resetForm }) => {
-    if (users && users.email === values.email) {
-      return toast.error("A user with this email is already registered", {
-        position: "bottom-center",
+    dispatch(register(values))
+      .unwrap()
+      .then(() => {
+        toast.success("Zaebis");
+        resetForm();
+      })
+      .catch((error) => {
+        toast.error(error);
       });
-    }
-
-    dispatch(register(values)).then(() => {
-      toast.success("Registration successful!", {
-        position: "bottom-center",
-      });
-      resetForm();
-    });
   };
 
   return (

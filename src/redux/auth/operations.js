@@ -1,8 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-// import axios from "axios";
 
-// axios.defaults.baseURL = "https://connections-api.goit.global/";
 export const goItApi = axios.create({
   baseURL: "https://connections-api.goit.global/",
 });
@@ -23,6 +21,9 @@ export const register = createAsyncThunk(
       setAuthHeader(data.token);
       return data;
     } catch (error) {
+      if (error.response.data.code === 11000) {
+        return thunkAPI.rejectWithValue("Xuinja");
+      }
       return thunkAPI.rejectWithValue(error.message);
     }
   }
@@ -36,6 +37,8 @@ export const logIn = createAsyncThunk(
       setAuthHeader(data.token);
       return data;
     } catch (error) {
+      console.log(error);
+
       return thunkAPI.rejectWithValue(error.message);
     }
   }
@@ -56,7 +59,7 @@ export const refreshUser = createAsyncThunk(
     const state = thunkAPI.getState();
     const persisterToken = state.auth.token;
 
-    if (!persisterToken) {
+    if (persisterToken === null) {
       return thunkAPI.rejectWithValue("Неможливо отримати дані");
     }
     try {

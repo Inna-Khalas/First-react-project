@@ -1,7 +1,7 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import "../../../src/index.css";
 import { selectContacts } from "../../redux/selectors";
 import { addContact } from "../../redux/contacts/contactsOps";
@@ -54,7 +54,6 @@ const ContactForm = () => {
 
   return (
     <>
-      <Toaster />
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}

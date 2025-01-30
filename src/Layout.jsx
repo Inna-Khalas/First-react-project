@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import AppBar from "./components/AppBar/AppBar";
 
-function Loyout({ children }) {
+function Layout({ children }) {
   return (
     <div>
       <AppBar />
@@ -10,4 +10,4 @@ function Loyout({ children }) {
   );
 }
 
-export default Loyout;
+export default Layout;
