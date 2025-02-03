@@ -1,7 +1,7 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import "../../../src/index.css";
 import { selectContacts } from "../../redux/selectors";
 import { addContact } from "../../redux/contacts/contactsOps";
@@ -54,7 +54,6 @@ const ContactForm = () => {
 
   return (
     <>
-      <Toaster />
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
@@ -62,7 +61,7 @@ const ContactForm = () => {
       >
         {() => (
           <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
-            <Form className="card-body">
+            <Form className="card bg-base-100 shadow-xl p-6 space-y-4">
               <div className="form-control">
                 <label className="label">
                   <span className="label-text">Name:</span>{" "}

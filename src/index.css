@@ -16,11 +16,13 @@
 input[type="checkbox"] {
   display: none;
 }
-
 .contacts-list {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
   gap: 16px;
-  flex-direction: column;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 16px;
 }
 
 .input-name {
@@ -60,4 +62,113 @@ input[type="checkbox"] {
 
 .delete-button:active {
   transform: scale(1.2);
+}
+
+.contact-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 300px;
+  background-color: #f4f6f9;
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin: 8px 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.contact-checkbox {
+  margin-right: 12px;
+  cursor: pointer;
+}
+
+.contact-info {
+  font-size: 16px;
+  font-weight: 500;
+  color: #333;
+  display: flex;
+  align-items: center;
+}
+
+.contact-name {
+  margin-right: 10px;
+}
+.contact-number {
+  font-weight: 600;
+  color: #4f9bf1;
+}
+
+.delete-button {
+  background: transparent;
+  border: none;
+  color: #e74c3c;
+  font-size: 24px;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.delete-button:hover {
+  color: #c0392b;
+}
+
+.delete-button:active {
+  transform: scale(1.1);
+}
+
+.contact-item:active {
+  transform: scale(0.98);
+}
+
+.features {
+  max-width: 600px;
+  margin-top: 40px;
+  padding: 20px;
+  background: #fff;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+
+.sectionTitle {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 16px;
+  color: #222;
+}
+
+.text {
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.6;
+  opacity: 0.9;
+  margin-bottom: 12px;
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+}
+
+.list li {
+  font-size: 18px;
+  font-weight: 500;
+  margin: 8px 0;
+  display: flex;
+  align-items: center;
+}
+
+.list li::before {
+  content: "✔";
+  color: #4b93f5;
+  font-size: 20px;
+  margin-right: 8px;
+}
+
+.callToAction {
+  margin-top: 40px;
+  padding: 20px;
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+  background: rgba(75, 147, 245, 0.1);
+  border-radius: 10px;
 }

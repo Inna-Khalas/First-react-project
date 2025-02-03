@@ -8,9 +8,16 @@ function AppBar() {
   const isLoggedIn = useSelector(selectIsLoggedIn);
 
   return (
-    <header>
-      <Navigation />
-      {isLoggedIn ? <UserMenu /> : <AuthNav />}
+    <header className="navbar bg-base-100">
+      <div className="flex-1">
+        <a href="/" className="btn btn-ghost text-xl">
+          CONTACTS<span>BOOK</span>
+        </a>
+      </div>
+      <div className="flex-none">
+        <Navigation />
+        {isLoggedIn ? <UserMenu /> : <AuthNav />}
+      </div>
     </header>
   );
 }
