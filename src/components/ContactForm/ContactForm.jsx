@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
 import "../../../src/index.css";
 import { selectContacts } from "../../redux/selectors";
-import { addContact } from "../../redux/contacts/contactsOps";
+import { addContact } from "../../redux/contacts/operations";
 
 const validationSchema = Yup.object({
   name: Yup.string()
