@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
 import { IoMdCloseCircle } from "react-icons/io";
-import { deleteContact } from "../../redux/contacts/contactsOps";
+import { deleteContact } from "../../redux/contacts/operations";
 
 const Contact = ({ name, number, id }) => {
   const dispatch = useDispatch();
