@@ -22,7 +22,7 @@ export const register = createAsyncThunk(
       return data;
     } catch (error) {
       if (error.response.data.code === 11000) {
-        return thunkAPI.rejectWithValue("Xuinja");
+        return thunkAPI.rejectWithValue("Цей email вже зареєстрований");
       }
       return thunkAPI.rejectWithValue(error.message);
     }
@@ -37,8 +37,6 @@ export const logIn = createAsyncThunk(
       setAuthHeader(data.token);
       return data;
     } catch (error) {
-      console.log(error);
-
       return thunkAPI.rejectWithValue(error.message);
     }
   }

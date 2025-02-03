@@ -2,9 +2,21 @@ import { NavLink } from "react-router-dom";
 
 function AuthNav() {
   return (
-    <div className="bg-base-100 rounded-t-none p-2">
-      <NavLink to="/register">Register</NavLink>
-      <NavLink to="/login">Login</NavLink>
+    <div className="menu menu-horizontal space-x-4 px-1">
+      <NavLink
+        to="/register"
+        className="text-lg text-neutral hover:text-primary"
+        activeClassName="text-primary"
+      >
+        Register
+      </NavLink>
+      <NavLink
+        to="/login"
+        className="text-lg text-neutral hover:text-primary"
+        activeClassName="text-primary"
+      >
+        Login
+      </NavLink>
     </div>
   );
 }

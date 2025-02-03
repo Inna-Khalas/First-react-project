@@ -61,7 +61,7 @@ const ContactForm = () => {
       >
         {() => (
           <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
-            <Form className="card-body">
+            <Form className="card bg-base-100 shadow-xl p-6 space-y-4">
               <div className="form-control">
                 <label className="label">
                   <span className="label-text">Name:</span>{" "}

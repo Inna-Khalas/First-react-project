@@ -11,9 +11,9 @@ function UserMenu() {
   };
 
   return (
-    <div>
-      <h1>Welcome {user.name}</h1>
-      <button type="button" onClick={onClick}>
+    <div className="flex items-center gap-4  p-4 ">
+      <h1 className="text-lg text-neutral ">Welcome {user.name}</h1>
+      <button type="button" onClick={onClick} className="btn btn-outline ">
         LogOut
       </button>
     </div>

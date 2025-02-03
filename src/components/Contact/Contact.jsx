@@ -10,10 +10,11 @@ const Contact = ({ name, number, id }) => {
   };
 
   return (
-    <li className="item">
-      <input type="checkbox" />
-      <span>
-        {name}: {number}
+    <li className="contact-item">
+      <input type="checkbox" className="contact-checkbox" />
+      <span className="contact-info">
+        <span className="contact-name">{name}: </span>
+        <span className="contact-number">{number}</span>
       </span>
       <button onClick={handleDelete} className="delete-button">
         <IoMdCloseCircle />

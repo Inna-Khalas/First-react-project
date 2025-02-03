@@ -16,11 +16,17 @@ function ContactsPage() {
   }, [dispatch]);
 
   return (
-    <div>
-      <h1>Your contacts:</h1>
+    <div className="space-y-6 wrapper">
+      <h1 className="text-2xl font-semibold">Your contacts:</h1>
       <ContactForm />
       <SearchBar />
-      {isLoading ? <BallTriangle /> : <ContactList />}
+      {isLoading ? (
+        <div className="flex justify-center items-center">
+          <BallTriangle color="#4B93F5" height={100} width={100} />
+        </div>
+      ) : (
+        <ContactList />
+      )}
     </div>
   );
 }
