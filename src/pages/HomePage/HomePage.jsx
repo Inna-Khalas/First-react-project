@@ -31,7 +31,7 @@ function HomePage() {
         </div>
       </div>
       <div className="features">
-        <h2 className="sectionTitle">✨ Why Choose ContactVault?</h2>
+        <h2 className="text-2xl mb-4">✨ Why Choose ContactVault?</h2>
         <ul className="list">
           <li>
             Quick Contact Addition – Add new contacts in just a few clicks.
@@ -53,7 +53,12 @@ function HomePage() {
 
       <div className="callToAction">
         <h2 className="sectionTitle">🔐 Get Started Today!</h2>
-        <p className="text">Sign up now and say goodbye to contact chaos.</p>
+        <p className="text">
+          <a href="/register" className="link link-info">
+            Sign up
+          </a>{" "}
+          now and say goodbye to contact chaos.
+        </p>
         <p className="text">
           With ContactVault, your contacts are always under control!
         </p>
