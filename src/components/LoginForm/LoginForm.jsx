@@ -28,7 +28,7 @@ function LoginForm() {
         {() => (
           <Form className="flex flex-col gap-4">
             <label className="form-control">
-              Email:
+              <span className="label-text"> Email: </span>
               <Field
                 type="email"
                 name="email"
@@ -42,7 +42,7 @@ function LoginForm() {
               className="text-error text-sm"
             />
             <label className="form-control">
-              Password:
+              <span className="label-text"> Password:</span>
               <Field
                 type="password"
                 name="password"

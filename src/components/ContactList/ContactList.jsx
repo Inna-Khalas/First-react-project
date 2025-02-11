@@ -7,6 +7,7 @@ import {
   selectTotalContacts,
 } from "../../redux/selectors";
 import { BallTriangle } from "react-loader-spinner";
+import TableHeader from "../TableHeader";
 
 const ContactList = () => {
   const contacts = useSelector(selectFilteredContacts);
@@ -27,12 +28,13 @@ const ContactList = () => {
   }
 
   return (
-    <div className="contact-list">
-      <ul className="contacts-list">
+    <div className="overflow-x-auto">
+      <table className="table">
+        <TableHeader />
         {contacts.map((contact) => (
           <Contact key={contact.id} {...contact} />
         ))}
-      </ul>
+      </table>
     </div>
   );
 };

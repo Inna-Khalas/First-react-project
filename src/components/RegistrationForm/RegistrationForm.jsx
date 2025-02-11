@@ -30,7 +30,7 @@ function RegistrationForm() {
   };
 
   return (
-    <div className="card w-full max-w-md bg-base-100 shadow-xl p-6 mx-auto">
+    <div className="card w-full max-w-md bg-base-100 shadow-xl p-6 mx-auto ">
       <Formik
         initialValues={initialValues}
         onSubmit={handleSubmit}
