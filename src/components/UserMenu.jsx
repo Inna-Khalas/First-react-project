@@ -11,8 +11,10 @@ function UserMenu() {
   };
 
   return (
-    <div className="flex items-center gap-4  p-4 ">
-      <h1 className="text-lg text-primary opacity-25">Welcome {user.name}</h1>
+    <div className="flex flex-col sm:flex-row items-center gap-3 p-4">
+      <h1 className="text-lg text-gray-700 font-semibold">
+        Welcome {user.name}
+      </h1>
       <button
         type="button"
         onClick={onClick}
