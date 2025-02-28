@@ -16,14 +16,15 @@ function ContactsPage() {
   }, [dispatch]);
 
   return (
-    <div className="space-y-10 p-6 bg-blue-100 wrapper">
-      <div className="flex items-end  justify-center gap-16 w-full  mx-auto">
+    <div className="container mx-auto p-6 bg-gray-50 min-h-screen flex flex-col items-center">
+      <div className="w-full max-w-3xl space-y-6 md:space-y-0 md:grid md:grid-cols-2 md:gap-6">
         <ContactForm />
         <SearchBar />
       </div>
-      <div className="mt-12">
+
+      <div className="w-full max-w-3xl mt-12 bg-white shadow-lg rounded-xl p-6">
         {isLoading ? (
-          <div className="flex justify-center items-center">
+          <div className="flex justify-center py-20">
             <BallTriangle color="#4B93F5" height={100} width={100} />
           </div>
         ) : (
