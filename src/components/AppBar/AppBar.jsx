@@ -1,14 +1,18 @@
 import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import Navigation from "../Navigation/Navigation";
 import { selectIsLoggedIn } from "../../redux/auth/selectors";
 import UserMenu from "../UserMenu";
 import AuthNav from "../AuthNav";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Sun, Moon } from "lucide-react";
+import { toggleTheme } from "../../redux/themeSlice";
+import { selectToggleTheme } from "../../redux/selectors";
 
 function AppBar() {
+  const dispatch = useDispatch();
   const isLoggedIn = useSelector(selectIsLoggedIn);
+  const theme = useSelector(selectToggleTheme);
   const [menuOpen, setMenuOpen] = useState(false);
   const location = useLocation();
 
@@ -17,11 +21,18 @@ function AppBar() {
   }, [location]);
 
   return (
-    <header className="navbar bg-base-100 border-b border-gray-300 shadow-md px-4 md:px-8">
+    <header className="navbar bg-base-100 border-b border-gray-300 shadow-md px-4 md:px-8 text-base-content">
       <div className="container mx-auto flex items-center justify-between py-2">
         <a href="/" className="text-xl font-bold">
           CONTACTS<span className="text-primary">BOOK</span>
         </a>
+
+        <button
+          onClick={() => dispatch(toggleTheme())}
+          className="p-2 rounded-md  transition text-base-content"
+        >
+          {theme ? <Sun size={24} /> : <Moon size={24} />}
+        </button>
 
         <button
           className="sm:hidden p-2 rounded-md hover:bg-gray-200 transition"

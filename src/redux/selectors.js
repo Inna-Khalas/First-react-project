@@ -17,3 +17,5 @@ export const selectFilteredContacts = createSelector(
       contact.name.toLowerCase().includes(filter.toLowerCase())
     )
 );
+
+export const selectToggleTheme = (state) => state.theme.theme;

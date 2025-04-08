@@ -2,7 +2,8 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 export const goItApi = axios.create({
-  baseURL: "https://connections-api.goit.global/",
+  baseURL: "https://nodejs-hw-mongodb-1-73bn.onrender.com",
+  withCredentials: true,
 });
 
 const setAuthHeader = (token) => {
@@ -17,7 +18,9 @@ export const register = createAsyncThunk(
   "auth/register",
   async (credentials, thunkAPI) => {
     try {
-      const { data } = await goItApi.post("/users/signup", credentials);
+      const { data } = await goItApi.post("/auth/register", credentials, {
+        withCredentials: true,
+      });
       setAuthHeader(data.token);
       return data;
     } catch (error) {
@@ -33,7 +36,9 @@ export const logIn = createAsyncThunk(
   "auth/login",
   async (credentials, thunkAPI) => {
     try {
-      const { data } = await goItApi.post("/users/login", credentials);
+      const { data } = await goItApi.post("/auth/login", credentials, {
+        withCredentials: true,
+      });
       setAuthHeader(data.token);
       return data;
     } catch (error) {
@@ -44,7 +49,7 @@ export const logIn = createAsyncThunk(
 
 export const logOut = createAsyncThunk("auth/logout", async (_, thunkAPI) => {
   try {
-    await goItApi.post("/users/logout");
+    await goItApi.post("/auth/logout", { withCredentials: true });
     clearAuthHeader();
   } catch (error) {
     return thunkAPI.rejectWithValue(error.message);
@@ -62,7 +67,9 @@ export const refreshUser = createAsyncThunk(
     }
     try {
       setAuthHeader(persisterToken);
-      const { data } = await goItApi.get("/users/current");
+      const { data } = await goItApi.get("/auth/refresh", {
+        withCredentials: true,
+      });
       return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
