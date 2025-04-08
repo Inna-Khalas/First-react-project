@@ -10,6 +10,7 @@ import NotFound from "../pages/NotFound";
 import { selectRefresh } from "../redux/auth/selectors";
 import { refreshUser } from "../redux/auth/operations";
 import { Toaster } from "react-hot-toast";
+import { selectToggleTheme } from "../redux/selectors";
 
 const HomePage = lazy(() => import("../pages/HomePage/HomePage"));
 const RegistrationPage = lazy(() =>
@@ -21,6 +22,11 @@ const ContactsPage = lazy(() => import("../pages/ContactsPage/ContactsPage"));
 const App = () => {
   const dispatch = useDispatch();
   const isRefreshing = useSelector(selectRefresh);
+  const theme = useSelector(selectToggleTheme);
+
+  useEffect(() => {
+    document.documentElement.setAttribute("data-theme", theme);
+  }, [theme]);
 
   useEffect(() => {
     dispatch(refreshUser());
